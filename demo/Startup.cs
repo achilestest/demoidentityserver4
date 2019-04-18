@@ -38,6 +38,13 @@ namespace demo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddAuthentication()
+                .AddIdentityServerAuthentication("token", isAuth =>
+                {
+                    isAuth.Authority = "http://localhost:17039/";
+                    isAuth.ApiName = "api";
+                    isAuth.RequireHttpsMetadata = false;
+                });
             string connection = Configuration["ConnectionStrings:BusinessConnection"];
             services.AddDbContext<BusinessContext>(options => options.UseSqlServer(connection));
 
@@ -57,17 +64,7 @@ namespace demo
             // Mapping Model and ModelView
             Mapper.Initialize(cfg => { Mapping.MappingBuilder(cfg);});
 
-            services.AddAuthentication(o =>
-            {
-                o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(o =>
-            {
-                o.Audience = "api";
-                o.Authority = "http://localhost:17039";
-                o.RequireHttpsMetadata = false;
-            });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

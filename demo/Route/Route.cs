@@ -16,7 +16,8 @@ namespace demo
         {
             List<Route> result = new List<Route>
             {
-                new Route(){Name="login",Url="api/users/get",Controller="Users", Action="GetUsers"}
+                new Route{Name="GetUser",Url="api/users/get",Controller="Users", Action="GetUsers"},
+                new Route{Name="Login",Url="api/users/login",Controller="Users", Action="Login"},
             };
             return result;
         }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using demo.Models;
 using demo.ModelViews;
+using demo.Request;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +23,22 @@ namespace demo.Controllers
             context.SaveChanges();
             UserView userView = Mapper.Map<UserView>(user);
             return Ok(userView);
+        }
+
+        [HttpGet]
+        public IActionResult Login([FromQuery] LoginRequest loginRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            BusinessContext context = new BusinessContext();
+            User user = context.User.Where(x => x.Username.Equals(loginRequest.Username) && x.Password.Equals(loginRequest.Password)).FirstOrDefault();
+            if (user == null)
+                return BadRequest();
+            
+
+            return Ok(user);
         }
     }
 }
