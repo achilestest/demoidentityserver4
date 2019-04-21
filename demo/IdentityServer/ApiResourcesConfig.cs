@@ -1,4 +1,5 @@
-﻿using IdentityServer4.Models;
+﻿using IdentityModel;
+using IdentityServer4.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,7 @@ namespace demo.IdentityServer
         public static IEnumerable<ApiResource> GetApis()
         {
             List<ApiResource> result = new List<ApiResource>();
-            foreach (Route item in Route.ListRoute())
-            {
-                result.Add(new ApiResource(item.Name,item.Url));
-            }
+            result.Add(new ApiResource("api", "My API Set #1", new[] { JwtClaimTypes.Name, JwtClaimTypes.Role, "office" }));
             return result;
         }
     }

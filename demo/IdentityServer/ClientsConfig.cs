@@ -15,20 +15,15 @@ namespace demo.IdentityServer
                 // native clients
                 new Client
                 {
-                    ClientId = "native.hybrid",
+                    ClientId = "local",
                     ClientName = "Native Client (Hybrid with PKCE)",
-
-                    RedirectUris = { "https://notused" },
-                    PostLogoutRedirectUris = { "https://notused" },
 
                     RequireClientSecret = false,
 
-                    AllowedGrantTypes = GrantTypes.Hybrid,
-                    RequirePkce = true,
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                     AllowedScopes = { "openid", "profile", "email", "api" },
 
                     AllowOfflineAccess = true,
-                    RefreshTokenUsage = TokenUsage.ReUse
                 },
                 new Client
                 {

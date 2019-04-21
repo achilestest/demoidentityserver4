@@ -41,7 +41,7 @@ namespace demo
                     if (!string.IsNullOrEmpty(userId?.Value) && long.Parse(userId.Value) > 0)
                     {
                         //get user from db (find user by user id)
-                        var user = await (new BusinessContext()).User.FindAsync(long.Parse(userId.Value));
+                        var user = (new BusinessContext()).User.Where(x=> x.Id==int.Parse(userId.Value)).FirstOrDefault();
 
                         // issue the claims for the user
                         if (user != null)

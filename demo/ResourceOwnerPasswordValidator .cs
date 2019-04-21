@@ -23,7 +23,7 @@ namespace demo
             try
             {
                 //get your user model from db (by username - in my case its email)
-                User user = (new BusinessContext()).User.FindAsync(context.UserName).Result;
+                User user = (new BusinessContext()).User.Where(x=> x.Username==context.UserName).FirstOrDefault();
                 if (user != null)
                 {
                     //check if password match - remember to hash password if stored as hash in db
