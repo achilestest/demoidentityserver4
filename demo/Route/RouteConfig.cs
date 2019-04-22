@@ -11,8 +11,8 @@ namespace demo
 
         public static IRouteBuilder RouteBulder(IRouteBuilder builder)
         {
-            List<Route> routes = Route.ListRoute();
-            foreach(Route item in routes)
+            List<EndPoint> routes = EndPoint.ListRoute();
+            foreach(EndPoint item in routes)
             {
                 builder.MapRoute(item.Name, item.Url, defaults: new { controller = item.Controller, action = item.Action });
             }

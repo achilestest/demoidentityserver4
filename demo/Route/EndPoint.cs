@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace demo
 {
-    public class Route
+    public class EndPoint
     {
         public string Name { get; set; }
         public string Url { get; set; }
         public string Controller { get; set; }
         public string Action { get; set; }
 
-        public static List<Route> ListRoute()
+        public static List<EndPoint> ListRoute()
         {
-            List<Route> result = new List<Route>
+            List<EndPoint> result = new List<EndPoint>
             {
-                new Route{Name="GetUser",Url="api/users/get",Controller="Users", Action="GetUsers"},
-                new Route{Name="Login",Url="api/users/login",Controller="Users", Action="Login"},
+                new EndPoint{Name="GetUser",Url="users/get",Controller="Users", Action="GetUsers"},
+                new EndPoint{Name="Login",Url="users/login",Controller="Users", Action="Login"},
             };
             return result;
         }

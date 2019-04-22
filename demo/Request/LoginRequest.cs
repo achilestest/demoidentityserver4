@@ -10,7 +10,13 @@ namespace demo.Request
     {
         [Required]
         public string Username { get; set; }
+
         [Required]
         public string Password { get; set; }
+
+        [Required]
+        public string Client_id { get; set; }
+
+        public string Grant_type { get; set; }
     }
 }

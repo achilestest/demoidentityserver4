@@ -21,7 +21,7 @@ namespace demo.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Server=HAINGUYEN\SQLEXPRESS;Database=Business;User Id=sa;Password=123456;");
+                optionsBuilder.UseSqlServer(@"Server=DESKTOP-M24IC29\SQLEXPRESS;Database=Business;User Id=sa;Password=123456;");
             }
         }
 
