@@ -13,7 +13,7 @@ namespace demo.Controllers
     {
         // GET api/values
         [HttpGet]
-        [Authorize(AuthenticationSchemes = "token")]
+        [Authorize]
         public ActionResult<IEnumerable<string>> Get()
         {
             return new string[] { "value1", "value2" };

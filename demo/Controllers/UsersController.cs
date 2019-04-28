@@ -25,8 +25,8 @@ namespace demo.Controllers
             return Ok(userView);
         }
 
-        [HttpGet]
-        public IActionResult Login([FromQuery] LoginRequest loginRequest)
+        [HttpPost]
+        public IActionResult Login([FromForm] LoginRequest loginRequest)
         {
             if (!ModelState.IsValid)
             {
