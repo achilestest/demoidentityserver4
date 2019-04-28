@@ -16,8 +16,9 @@ namespace demo
         {
             List<EndPoint> result = new List<EndPoint>
             {
-                new EndPoint{Name="GetUser",Url="users/get",Controller="Users", Action="GetUsers"},
-                new EndPoint{Name="Login",Url="users/login",Controller="Users", Action="Login"},
+                new EndPoint{Name="GetUser",Url="api/users/get",Controller="Users", Action="GetUsers"},
+                new EndPoint{Name="Login",Url="api/users/login",Controller="Users", Action="Login"},
+                new EndPoint{Name="Test",Url="api/values",Controller="Values", Action="Get"},
             };
             return result;
         }

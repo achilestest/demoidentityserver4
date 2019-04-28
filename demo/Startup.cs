@@ -84,15 +84,18 @@ namespace demo
             }
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug(LogLevel.Trace); // you're not passing the LogLevel!
-            app.Map("/api", authApp =>
-            {
-                app.UseStaticFiles("/api");
-                authApp.UsePathBase(new PathString("/api"));
-                authApp.UseIdentityServer();
-                authApp.UseAuthentication();
-                authApp.UseMvc(routes => RouteConfig.RouteBulder(routes));
+            //app.Map("/api", authApp =>
+            //{
+            //    app.UseStaticFiles("/api");
+            //    authApp.UsePathBase(new PathString("/api"));
+            //    authApp.UseIdentityServer();
+            //    authApp.UseAuthentication();
+            //    authApp.UseMvc(routes => RouteConfig.RouteBulder(routes));
 
-            });
+            //});
+            app.UseIdentityServer();
+            app.UseAuthentication();
+            app.UseMvc(routes => RouteConfig.RouteBulder(routes));
         }
     }
 }

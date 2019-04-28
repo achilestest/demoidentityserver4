@@ -32,7 +32,7 @@ namespace demo.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login([FromQuery] LoginRequest loginRequest)
+        public async Task<IActionResult> Login([FromQuery] LoginRequest loginRequest)
         {
             if (!ModelState.IsValid)
             {

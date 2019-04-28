@@ -18,8 +18,8 @@ namespace demo.IdentityServer
                     ClientId = "local",
                     ClientName = "Native Client (Hybrid with PKCE)",
 
-                    RequireClientSecret = false,
-
+                    RequireClientSecret = true,
+                    ClientSecrets= { new Secret("bsd".Sha256()) },
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                     AllowedScopes = { "openid", "profile", "email", "api" },
 

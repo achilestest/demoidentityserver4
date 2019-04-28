@@ -7,8 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace demo.Controllers
 {
-    [Route("[controller]")]
-    [ApiController]
     public class ValuesController : ControllerBase
     {
         // GET api/values
@@ -20,11 +18,7 @@ namespace demo.Controllers
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
-        {
-            return "value";
-        }
+        
 
         // POST api/values
         [HttpPost]
