@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.Configuration;
 using demo.Models;
 using demo.ModelViews;
 using demo.Request;
+using IdentityModel.Client;
+using IdentityServer4;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +18,7 @@ namespace demo.Controllers
 {
     public class UsersController : ControllerBase
     {
+        [HttpGet]
         public IActionResult GetUsers()
         {
             BusinessContext context = new BusinessContext();
@@ -25,20 +31,30 @@ namespace demo.Controllers
             return Ok(userView);
         }
 
-        [HttpPost]
-        public IActionResult Login([FromForm] LoginRequest loginRequest)
+        [HttpGet]
+        public IActionResult Login([FromQuery] LoginRequest loginRequest)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            BusinessContext context = new BusinessContext();
-            User user = context.User.Where(x => x.Username.Equals(loginRequest.Username) && x.Password.Equals(loginRequest.Password)).FirstOrDefault();
-            if (user == null)
-                return BadRequest();
-            
 
-            return Ok(user);
+            HttpClient client = new HttpClient();
+            TokenRequest tokenRequest = new TokenRequest
+            {
+                Address = "http://localhost:17039/api/connect/token",
+                ClientId = loginRequest.Client_id,
+                GrantType = loginRequest.Grant_type
+            };
+            tokenRequest.Parameters.Add("username", loginRequest.Username);
+            tokenRequest.Parameters.Add("password", loginRequest.Password);
+            var response = await client.RequestTokenAsync(tokenRequest);
+
+            if (response.HttpStatusCode != System.Net.HttpStatusCode.OK || response.IsError)
+            {
+                throw new Exception(response.Error);
+            }
+            return Ok(response.Json);
         }
     }
 }
