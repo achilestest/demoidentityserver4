@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.Configuration;
+using demo.IdentityServer;
 using demo.Models;
 using demo.ModelViews;
 using demo.Request;
@@ -31,8 +32,8 @@ namespace demo.Controllers
             return Ok(userView);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Login([FromQuery] LoginRequest loginRequest)
+        [HttpPost]
+        public async Task<IActionResult> Login([FromForm] LoginRequest loginRequest)
         {
             if (!ModelState.IsValid)
             {
@@ -42,9 +43,10 @@ namespace demo.Controllers
             HttpClient client = new HttpClient();
             TokenRequest tokenRequest = new TokenRequest
             {
-                Address = "http://localhost:17039/api/connect/token",
+                Address = Discovery.LoginEndpoint,
                 ClientId = loginRequest.Client_id,
-                GrantType = loginRequest.Grant_type
+                GrantType = "password",
+                ClientSecret = "bsd",
             };
             tokenRequest.Parameters.Add("username", loginRequest.Username);
             tokenRequest.Parameters.Add("password", loginRequest.Password);
@@ -53,6 +55,32 @@ namespace demo.Controllers
             if (response.HttpStatusCode != System.Net.HttpStatusCode.OK || response.IsError)
             {
                 throw new Exception(response.Error);
+            }
+            return Ok(response.Json);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RefreshToken([FromForm] Request.RefreshTokenRequest refreshRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            HttpClient client = new HttpClient();
+            IdentityModel.Client.RefreshTokenRequest tokenRequest = new IdentityModel.Client.RefreshTokenRequest
+            {
+                Address = Discovery.LoginEndpoint,
+                ClientId = refreshRequest.Client_id,
+                ClientSecret = "bsd",
+                RefreshToken = refreshRequest.RefreshToken,
+                GrantType = "refresh_token"
+            };
+            var response = await client.RequestRefreshTokenAsync(tokenRequest);
+            //var tokenClient = new TokenClient(Discovery.LoginEndpoint, refreshRequest.Client_id,"bsd");
+            //var response = tokenClient.RequestRefreshTokenAsync(refreshRequest.RefreshToken).Result;
+            if (response.HttpStatusCode != System.Net.HttpStatusCode.OK || response.IsError)
+            {
+                return BadRequest(response.Error);
             }
             return Ok(response.Json);
         }

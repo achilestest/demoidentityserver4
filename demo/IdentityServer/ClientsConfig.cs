@@ -24,6 +24,7 @@ namespace demo.IdentityServer
                     AllowedScopes = { "openid", "profile", "email", "api" },
 
                     AllowOfflineAccess = true,
+                    AccessTokenLifetime = 1800,
                 },
                 new Client
                 {

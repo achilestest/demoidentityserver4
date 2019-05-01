@@ -6,16 +6,11 @@ using System.Threading.Tasks;
 
 namespace demo.Request
 {
-    public class LoginRequest
+    public class RefreshTokenRequest
     {
         [Required]
-        public string Username { get; set; }
-
-        [Required]
-        public string Password { get; set; }
-
+        public string RefreshToken { get; set; }
         [Required]
         public string Client_id { get; set; }
-        
     }
 }

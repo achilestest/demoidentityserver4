@@ -18,6 +18,7 @@ namespace demo
             {
                 new EndPoint{Name="GetUser",Url="api/users/get",Controller="Users", Action="GetUsers"},
                 new EndPoint{Name="Login",Url="api/users/login",Controller="Users", Action="Login"},
+                new EndPoint{Name="RefreshToken",Url="api/users/refresh-token",Controller="Users", Action="RefreshToken"},
                 new EndPoint{Name="Test",Url="api/values",Controller="Values", Action="Get"},
             };
             return result;
